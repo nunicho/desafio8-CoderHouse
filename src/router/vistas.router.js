@@ -7,8 +7,8 @@ const prodModelo = require("../dao/DB/models/productos.modelo.js");
 const mongoose = require("mongoose");
 
 const session = require("express-session");
-const FileStore = require("session-file-store");
 const ConnectMongo = require("connect-mongo")
+const FileStore = require("session-file-store");
 
 // PARA INICIALIZAR FILESTORE
 const fileStore = FileStore(session);
@@ -31,6 +31,22 @@ router.use(
   })
 );
 
+const auth = (req, res, next)=>{
+  if(req.session.usuario){
+    next()
+  }else{
+    return res.redirect('/login')
+  }
+}
+
+const auth2 = (req, res, next) => {
+  if (req.session.usuario) {
+    console.log('auth2 me manda a perfil')
+    return res.redirect("/perfil");
+  } else {
+    next();
+  }
+};
 
 router.get("/", (req, res) => {
   // SESSION
@@ -308,6 +324,22 @@ router.get("/chat", (req, res) => {
     estilo: "chat.css",
   });
 });
+
+
+//---------------------------------------------------------------- RUTAS PARA EL LOGIN ---------------//
+
+router.get('/registro', auth2, (req, res)=>{
+  res.status(200).render('registro')
+})
+
+router.get("/login", auth2, (req, res) => {
+  res.status(200).render("login");
+});
+
+router.get("/perfil", auth, (req, res) => {
+  res.status(200).render("perfil");
+});
+
 
 module.exports = router;
 

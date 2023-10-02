@@ -3,9 +3,15 @@ const fs = require("fs");
 const http = require("http");
 const socketIO = require("socket.io");
 const MessageModel = require("./dao/DB/models/messages.modelo.js");
+
 const moongose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser")
+
+
+
+const session = require("express-session");
+const ConnectMongo = require("connect-mongo");
 
 
 // HANDLEBARS - importación
@@ -17,6 +23,22 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+//PARA SESSION Y LOGIN
+
+app.use(
+  session({
+    secret: "claveSecreta",
+    resave: true,
+    saveUninitialized: true,
+    store: ConnectMongo.create({
+      mongoUrl:
+        "mongodb+srv://contaalonso:12345qwert@cluster0.k4sa2ya.mongodb.net/?retryWrites=true&w=majority&dbName=ecommercePRUEBA",
+      ttl: 3600
+    }),
+  })
+);
 
 // PARA EL MANEJO DE COOKIES
 app.use(cookieParser())
@@ -32,11 +54,16 @@ const cartsRouter = require("./dao/DB/routes/DBcarts.router.js");
 // Router de Handlebars
 const vistasRouter = require("./router/vistas.router.js");
 
+// Router de Session
+
+const sessionsRouter = require("./router/sessions.router.js");
+
 // Inicialización de routers
 app.use("/api/fsproducts", FSproductsRouter);
 app.use("/api/fscarts", FScartsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
+app.use("/api/sessions", sessionsRouter)
 app.use("/", vistasRouter);
 
 // HANDLEBARS - inicialización
