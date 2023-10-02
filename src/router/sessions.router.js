@@ -54,7 +54,7 @@ router.post('/login', async (req,res)=>{
         email: usuario.email
     }
 
-    res.redirect('/perfil')
+    res.redirect('/')
 
    
 })

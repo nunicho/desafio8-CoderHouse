@@ -6,30 +6,6 @@ const carritosModelo = require("../dao/DB/models/carritos.modelo.js");
 const prodModelo = require("../dao/DB/models/productos.modelo.js");
 const mongoose = require("mongoose");
 
-const session = require("express-session");
-const ConnectMongo = require("connect-mongo")
-const FileStore = require("session-file-store");
-
-// PARA INICIALIZAR FILESTORE
-const fileStore = FileStore(session);
-
-// PARA INICIALIZAR SESSION
-router.use(
-  session({
-    secret: "claveSecreta",
-    saveUninitialized: true,
-    resave: true,
-    store: ConnectMongo.create({
-        mongoUrl:"mongodb+srv://contaalonso:12345qwert@cluster0.k4sa2ya.mongodb.net/?retryWrites=true&w=majority&dbName=ecommercePRUEBA",
-        ttl:30
-      })
-    // store: new fileStore({
-    //   path: './src/archivos/sesiones',
-    //   retries: 0,
-    //   ttl: 60,
-    // })
-  })
-);
 
 const auth = (req, res, next)=>{
   if(req.session.usuario){
@@ -42,51 +18,13 @@ const auth = (req, res, next)=>{
 const auth2 = (req, res, next) => {
   if (req.session.usuario) {
     console.log('auth2 me manda a perfil')
-    return res.redirect("/perfil");
+    return res.redirect("/");
   } else {
     next();
   }
 };
 
-router.get("/", (req, res) => {
-  // SESSION
-
-  console.log(req.session);
-
-  let { nombre } = req.query;
-
-  res.setHeader("Content-Type", "text/html");
-  if (!nombre) {
-    if (req.session.contador) {
-      req.session.contador++;
-      return res.send(
-        `<h2>Hola. Has visitado este sitio en ${req.session.contador} oportunidades</h2>`
-      );
-    } else {
-      req.session.contador = 1;
-      return res.send(`<h2>Bienvenido...!!!</h2>`);
-    }
-  } else {
-    if (req.session.usuarios) {
-      let indice = req.session.usuarios.findIndex((u) => u.nombre === nombre);
-      if (indice === -1) {
-        req.session.usuarios.push({ nombre, contador: 1 });
-        return res.send(`<h2>Bienvenido ${nombre}...!!!</h2>`);
-      } else {
-        req.session.usuarios[indice].contador++;
-        return res.send(
-          `<h2>Hola, ${nombre}. Has visitado este sitio en ${req.session.usuarios[indice].contador} oportunidades</h2>`
-        );
-      }
-    } else {
-      req.session.usuarios = [];
-      req.session.usuarios.push({
-        nombre,
-        contador: 1,
-      });
-      return res.send(`<h2>Bienvenido ${nombre}...!!!</h2>`);
-    }
-  }
+router.get("/", auth, (req, res) => {
 
   res.status(200).render("home", {
     titlePage: "Home Page de la ferretería El Tornillo",
