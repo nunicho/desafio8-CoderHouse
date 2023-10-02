@@ -5,6 +5,8 @@ const socketIO = require("socket.io");
 const MessageModel = require("./dao/DB/models/messages.modelo.js");
 const moongose = require("mongoose");
 const path = require("path");
+const cookieParser = require("cookie-parser")
+
 
 // HANDLEBARS - importación
 const handlebars = require("express-handlebars");
@@ -15,6 +17,9 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// PARA EL MANEJO DE COOKIES
+app.use(cookieParser())
 
 // Routers de FileSystem (FS)
 const FSproductsRouter = require("./dao/fileSystem/routes/FSproducts.router.js");
@@ -63,8 +68,8 @@ serverSocket.on("connection", (socket) => {});
 
 moongose
   .connect(
-   // "mongodb+srv://contaalonso:12345qwert@cluster0.k4sa2ya.mongodb.net/?retryWrites=true&w=majority&dbName=ecommercePRUEBA"
-    "mongodb+srv://mauricioalonso:12345qwert@cluster0.frgywur.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerce"
+   "mongodb+srv://contaalonso:12345qwert@cluster0.k4sa2ya.mongodb.net/?retryWrites=true&w=majority&dbName=ecommercePRUEBA"
+    //"mongodb+srv://mauricioalonso:12345qwert@cluster0.frgywur.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerce"
   )
   .then(console.log("DB Conectada"))
   .catch((error) => console.log(error));
