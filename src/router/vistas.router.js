@@ -24,6 +24,11 @@ const auth2 = (req, res, next) => {
   }
 };
 
+router.use((req, res, next) => {
+  res.locals.usuario = req.session.usuario; // Pasar el usuario a res.locals
+  next();
+});
+
 router.get("/", auth, (req, res) => {
 
   res.status(200).render("home", {
