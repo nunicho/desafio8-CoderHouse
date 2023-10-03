@@ -38,7 +38,14 @@ router.post('/login', async (req,res)=>{
         return  res.send('faltan datos')
     }
 
-
+    if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+      req.session.usuario = {
+        nombre: "Coder",
+        email: "adminCoder@coder.com",
+        rol: "administrador",
+      };
+      return res.redirect("/");
+    }
     password = crypto
       .createHmac("sha256", "palabraSecreta")
       .update(password)
@@ -52,8 +59,7 @@ router.post('/login', async (req,res)=>{
     req.session.usuario = {
       nombre: usuario.nombre,
       email: usuario.email,    
-      rol:
-        usuario.email === "adminCoder@coder.com" ? "administrador" : "usuario",
+      rol: "usuario",
     };
 
     res.redirect('/')
