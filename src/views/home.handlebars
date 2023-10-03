@@ -1,7 +1,12 @@
 <body>
-    {{#if usuario}}
-        <h2>Bienvenido, {{usuario.nombre}}!</h2>
-    {{/if}}
+    
+    {{#ifEquals usuario.rol 'administrador'}}
+            <h2>Bienvenido, ADMINISTRADOR {{usuario.nombre}}!</h2>
+    {{/ifEquals}}
+    {{#ifEquals usuario.rol 'usuario'}}
+        <h2>Bienvenido, Usuario {{usuario.nombre}}!</h2>
+    {{/ifEquals}}
+    
 
     <h2>{{titlePage}}</h2>
     <hr>  

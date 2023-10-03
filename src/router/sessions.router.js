@@ -50,9 +50,11 @@ router.post('/login', async (req,res)=>{
     }
 
     req.session.usuario = {
-        nombre: usuario.nombre,
-        email: usuario.email
-    }
+      nombre: usuario.nombre,
+      email: usuario.email,    
+      rol:
+        usuario.email === "adminCoder@coder.com" ? "administrador" : "usuario",
+    };
 
     res.redirect('/')
 

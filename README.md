@@ -60,7 +60,7 @@ PUT / http://localhost:8080/api/products/65160d3c2d9e25f3e602ed3e
 
 }
 
-6. ## Como configurar una petición POST de Carrito:
+7. ## Como configurar una petición POST de Carrito:
 
 GET / http://localhost:8080/api/carts
 
@@ -124,9 +124,15 @@ DELETE / http://localhost:8080/api/carts/65161408d2e9f8ac5bc09f87
 
 DELETE // http://localhost:8080/api/carts/651615487520733661cb99f0/products/65160ded2d9e25f3e602ed4a  // para eliminar un producto específico de un carrito, sin borrar el carrito
 
-6. ## FileSystem y MongoDB:
+8. ## FileSystem y MongoDB:
 
 Puse todo el carpeta DAO, pero dejé funcionales las vistas de handlebars. El usuario puede elegir navegar dentro de filesystem o MongoDB
 
 Para esta entrega se creó un form, con un input donde el usuario ingresa el número de id del carrito, por ejemplo 651615487520733661cb99f0 y luego puede ir a 
 http://localhost:8080/carts/651615487520733661cb99f0
+
+
+8. ## Usuario Administrador:
+Usuario: Coder
+Email: adminCoder@coder.com
+Pass: adminCod3r123
