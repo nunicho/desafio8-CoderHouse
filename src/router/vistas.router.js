@@ -39,7 +39,7 @@ router.get("/", auth, (req, res) => {
 
 //---------------------------------------------------------------- RUTAS EN FILESYSTEM --------------- //
 
-router.get("/fsproducts", (req, res) => {
+router.get("/fsproducts", auth, (req, res) => {
   let index = parseInt(req.query.index) || 0;
   const array = arrayProducts;
   const totalProducts = array.length;
@@ -63,7 +63,7 @@ router.get("/fsproducts", (req, res) => {
   });
 });
 
-router.get("/fsrealtimeproducts", (req, res) => {
+router.get("/fsrealtimeproducts", auth, (req, res) => {
   let index = parseInt(req.query.index) || 0;
   const array = arrayProducts;
   const totalProducts = array.length;
@@ -89,7 +89,7 @@ router.get("/fsrealtimeproducts", (req, res) => {
 
 //---------------------------------------------------------------- RUTAS PARA MONGO --------------- //
 
-router.get("/DBproducts", async (req, res) => {
+router.get("/DBproducts", auth, async (req, res) => {
   try {
     let pagina = req.query.pagina || 1;
     let filtroTitle = req.query.filtro;
@@ -157,7 +157,7 @@ router.get("/DBproducts", async (req, res) => {
 
 module.exports = router;
 
-router.get("/DBproducts/:id", async (req, res) => {
+router.get("/DBproducts/:id", auth, async (req, res) => {
   let id = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(id))
@@ -182,7 +182,7 @@ router.get("/DBproducts/:id", async (req, res) => {
   });
 });
 
-router.post("/DBProducts", async (req, res) => {
+router.post("/DBProducts", auth, async (req, res) => {
   let producto = req.body;
   if (
     !producto.title ||
@@ -208,7 +208,7 @@ router.post("/DBProducts", async (req, res) => {
   }
 });
 
-router.delete("/DBproducts/:id", async (req, res) => {
+router.delete("/DBproducts/:id", auth, async (req, res) => {
   let id = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ error: "id inválido" });
@@ -222,7 +222,7 @@ router.delete("/DBproducts/:id", async (req, res) => {
   res.status(200).json({ resultado });
 });
 
-router.get("/carts/:cid", async (req, res) => {
+router.get("/carts/:cid", auth, async (req, res) => {
   try {
     const cid = req.params.cid;
 
@@ -261,7 +261,7 @@ router.get("/carts/:cid", async (req, res) => {
 
 //---------------------------------------------------------------- RUTAS PARA EL CHAT --------------- //
 
-router.get("/chat", (req, res) => {
+router.get("/chat", auth, (req, res) => {
   res.setHeader("Content-type", "text/html");
   res.status(200).render("chat", {
     estilo: "chat.css",
