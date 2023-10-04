@@ -31,7 +31,15 @@ router.use((req, res, next) => {
 
 router.get("/", auth, (req, res) => {
 
+    let verLogin = true;
+    if (req.session.usuario) {
+      verLogin = false;
+    }
+
+
+
   res.status(200).render("home", {
+    verLogin,
     titlePage: "Home Page de la ferretería El Tornillo",
     estilo: "styles.css",
   });
@@ -272,15 +280,21 @@ router.get("/chat", auth, (req, res) => {
 //---------------------------------------------------------------- RUTAS PARA EL LOGIN ---------------//
 
 router.get('/registro', auth2, (req, res)=>{
-  res.status(200).render('registro')
+  res.status(200).render("registro", {
+    verLogin: true,
+  });
 })
 
 router.get("/login", auth2, (req, res) => {
-  res.status(200).render("login");
+  res.status(200).render("login",{
+    verLogin:true,
+  });
 });
 
 router.get("/perfil", auth, (req, res) => {
-  res.status(200).render("perfil");
+  res.status(200).render("perfil",{
+    verLogin:false,
+  });
 });
 
 
