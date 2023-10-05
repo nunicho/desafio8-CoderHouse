@@ -136,3 +136,5 @@ http://localhost:8080/carts/651615487520733661cb99f0
 Usuario: Coder
 Email: adminCoder@coder.com
 Pass: adminCod3r123
+
+Se puso hardcodeado en el código de sessions.router.js porque no debía estar en la base de datos de usuarios. 

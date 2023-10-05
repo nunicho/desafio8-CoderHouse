@@ -57,6 +57,9 @@ router.post('/login', async (req,res)=>{
         email: "adminCoder@coder.com",
         rol: "administrador",
       };
+
+      //Se puso hardcodeado adminCoder@coder.com en el código de sessions.router.js porque no debía estar en la base de datos de usuarios.
+
       return res.redirect("/");
     }
     password = crypto
