@@ -126,7 +126,7 @@ DELETE // http://localhost:8080/api/carts/651615487520733661cb99f0/products/6516
 
 8. ## FileSystem y MongoDB:
 
-Puse todo el carpeta DAO, pero dejé funcionales las vistas de handlebars. El usuario puede elegir navegar dentro de filesystem o MongoDB
+Puse todo el carpeta DAO, pero dejé funcionales las vistas de handlebars. El usuario puede elegir navegar dentro de filesystem o MongoDB.
 
 Para esta entrega se creó un form, con un input donde el usuario ingresa el número de id del carrito, por ejemplo 651615487520733661cb99f0 y luego puede ir a 
 http://localhost:8080/carts/651615487520733661cb99f0
