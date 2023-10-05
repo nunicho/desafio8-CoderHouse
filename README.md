@@ -14,15 +14,15 @@ Mauricio Javier ALONSO
 
 3. ## TITULO DESAFIO ENTREGABLE: 
 
-Segunda pre-entrega del proyecto final 
+Implementación de Login
 
 4. ## N° DESAFIO ENTREGABLE: 
 
-N° 7
+N° 8
 
 5. ## CONSIGNA DESAFIO ENTREGABLE: 
 
-Deberás entregar el proyecto que has venido armando, cambiando persistencia en base de datos, además de agregar algunos endpoints nuevos a tu e-commerce. 
+Ajustar nuestro servidor principal para trabajar con un sistema de login.
 
 
 
@@ -132,7 +132,7 @@ Para esta entrega se creó un form, con un input donde el usuario ingresa el nú
 http://localhost:8080/carts/651615487520733661cb99f0
 
 
-8. ## Usuario Administrador:
+9. ## Usuario Administrador:
 Usuario: Coder
 Email: adminCoder@coder.com
 Pass: adminCod3r123
