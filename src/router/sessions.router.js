@@ -5,37 +5,43 @@ const modeloUsuarios = require("../dao/DB/models/usuarios.modelo.js");
 
 const crypto = require("crypto")
 
-router.post('/registro', async (req,res)=>{
+router.post("/registro", async (req, res) => {
+  try {
+    let { nombre, email, password } = req.body;
 
-    let {nombre, email, password} = req.body
-
-    if(!nombre || !email || !password){
-        //return res.status(400).send('faltan datos')
-        return res.redirect(
-          "/registro?error=Complete email, nombre, y contraseña"
-        );
+    if (!nombre || !email || !password) {
+      return res.redirect(
+        "/registro?error=Complete email, nombre, y contraseña"
+      );
     }
 
-    let existe = await modeloUsuarios.findOne({email})
-    if(existe){
-        //return res.status(400).send(`Usuario ya está registrado: ${email}`);
-         return res.redirect(
-           "/registro?error=" + `Usuario ya está registrado: ${email}`
-         );
+    let existe = await modeloUsuarios.findOne({ email });
+    if (existe) {
+      return res.redirect(
+        "/registro?error=" + `Usuario ya está registrado: ${email}`
+      );
     }
 
-    password = crypto.createHmac('sha256','palabraSecreta').update(password).digest('base64')
+    password = crypto
+      .createHmac("sha256", "palabraSecreta")
+      .update(password)
+      .digest("base64");
 
     await modeloUsuarios.create({
-        nombre,email, password
-    })
+      nombre,
+      email,
+      password,
+    });
 
-    // ACA SE PUEDE AGREGAR UN TRY CATCH
-
-    res.redirect(`/login?usuarioCreado=${email}`)
-
-    //MENSAJE EN VERDE QUE DIGA "SE HA CREADO UN USUARIO"
-})
+    res.redirect(`/login?usuarioCreado=${email}`);
+  } catch (error) {
+    console.error("Error al registrar usuario:", error);
+    //res.status(500).send("Ocurrió un error al registrar el usuario.");
+    return res
+      .status(500)
+      .redirect("/login?error=Ocurrió un error al registrar el usuario");
+  }
+});
 
 router.post('/login', async (req,res)=>{
 
