@@ -6,18 +6,16 @@ const carritosModelo = require("../dao/DB/models/carritos.modelo.js");
 const prodModelo = require("../dao/DB/models/productos.modelo.js");
 const mongoose = require("mongoose");
 
-
-const auth = (req, res, next)=>{
-  if(req.session.usuario){
-    next()
-  }else{
-    return res.redirect('/login')
+const auth = (req, res, next) => {
+  if (req.session.usuario) {
+    next();
+  } else {
+    return res.redirect("/login");
   }
-}
+};
 
 const auth2 = (req, res, next) => {
   if (req.session.usuario) {
-    console.log('auth2 me manda a perfil')
     return res.redirect("/");
   } else {
     next();
@@ -30,13 +28,10 @@ router.use((req, res, next) => {
 });
 
 router.get("/", auth, (req, res) => {
-
-    let verLogin = true;
-    if (req.session.usuario) {
-      verLogin = false;
-    }
-
-
+  let verLogin = true;
+  if (req.session.usuario) {
+    verLogin = false;
+  }
 
   res.status(200).render("home", {
     verLogin,
@@ -276,27 +271,52 @@ router.get("/chat", auth, (req, res) => {
   });
 });
 
-
 //---------------------------------------------------------------- RUTAS PARA EL LOGIN ---------------//
 
-router.get('/registro', auth2, (req, res)=>{
+router.get("/registro", auth2, (req, res) => {
+  let error = false;
+  let errorDetalle = "";
+  if (req.query.error) {
+    error = true;
+    errorDetalle = req.query.error;
+  }
+
   res.status(200).render("registro", {
     verLogin: true,
+    error,
+    errorDetalle,
   });
-})
+});
 
 router.get("/login", auth2, (req, res) => {
-  res.status(200).render("login",{
-    verLogin:true,
+  let error = false;
+  let errorDetalle = "";
+  if (req.query.error) {
+    error = true;
+    errorDetalle = req.query.error;
+  }
+
+  let usuarioCreado = false;
+  let usuarioCreadoDetalle = "";
+  if (req.query.usuarioCreado) {
+    usuarioCreado = true;
+    usuarioCreadoDetalle = req.query.usuarioCreado;
+  }
+
+  res.status(200).render("login", {
+    verLogin: true,
+    usuarioCreado,
+    usuarioCreadoDetalle,
+    error,
+    errorDetalle,
   });
 });
 
 router.get("/perfil", auth, (req, res) => {
-  res.status(200).render("perfil",{
-    verLogin:false,
+  res.status(200).render("perfil", {
+    verLogin: false,
   });
 });
-
 
 module.exports = router;
 

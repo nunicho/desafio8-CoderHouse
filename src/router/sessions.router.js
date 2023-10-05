@@ -10,12 +10,18 @@ router.post('/registro', async (req,res)=>{
     let {nombre, email, password} = req.body
 
     if(!nombre || !email || !password){
-        return res.status(400).send('faltan datos')
+        //return res.status(400).send('faltan datos')
+        return res.redirect(
+          "/registro?error=Complete email, nombre, y contraseña"
+        );
     }
 
     let existe = await modeloUsuarios.findOne({email})
     if(existe){
-        return res.status(400).send(`Usuario ya está registrado: ${email}`);
+        //return res.status(400).send(`Usuario ya está registrado: ${email}`);
+         return res.redirect(
+           "/registro?error=" + `Usuario ya está registrado: ${email}`
+         );
     }
 
     password = crypto.createHmac('sha256','palabraSecreta').update(password).digest('base64')
@@ -35,7 +41,8 @@ router.post('/login', async (req,res)=>{
 
     let {email, password} = req.body
     if(!email || !password){
-        return  res.send('faltan datos')
+        //return  res.status(400).send('faltan datos')
+       return res.redirect("/login?error=Faltan datos");
     }
 
     if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
@@ -53,7 +60,8 @@ router.post('/login', async (req,res)=>{
 
     let usuario = await modeloUsuarios.findOne({email, password})
     if(!usuario){
-        return res.status(401).send('credenciales incorrectas')
+        //return res.status(401).send('credenciales incorrectas')
+        return res.redirect("/login?error=credenciales incorrectas");
     }
 
     req.session.usuario = {
