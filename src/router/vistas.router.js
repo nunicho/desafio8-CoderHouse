@@ -285,6 +285,7 @@ router.get("/registro", auth2, (req, res) => {
     verLogin: true,
     error,
     errorDetalle,
+    estilo: "login.css",
   });
 });
 
@@ -309,12 +310,14 @@ router.get("/login", auth2, (req, res) => {
     usuarioCreadoDetalle,
     error,
     errorDetalle,
+    estilo: "login.css",
   });
 });
 
 router.get("/perfil", auth, (req, res) => {
   res.status(200).render("perfil", {
     verLogin: false,
+    estilo: "login.css",
   });
 });
 
